@@ -1,0 +1,55 @@
+zuul:
+   ignoredServices: "*"
+   sensitiveHeaders: Cookie,Set-Cookie
+   routes:
+      E-LEARNING:
+          path: /E-learning/**
+          serviceId: e-learning
+      AUTH:
+          path: /AUTH/**
+          serviceId: authentification
+      
+   host:
+      connect-timeout-millis: 5000
+      socket-timeout-millis: 30000
+         
+server:
+   port:8080
+   
+# Eureka address
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka/
+      
+# disable hystrix timed-out
+hystrix:
+    command:
+        default:
+            execution:
+                timeout:
+                    enabled: false
+        isolation :
+          thread :
+            interruptOnTimeout : 10000
+
+spring:
+    servlet:
+        multipart:
+            max-file-size: 50MB
+            max-request-size: 50MB
+            enabled: true
+                 
+ribbon:
+  ConnectTimeout: 30000
+  ReadTimeout: 990000
+  eureka:
+    enabled: true
+
+endpoints:
+  restart:
+    activated: true
+  shutdown:
+    activated: true
+  health:
+    sensitive: true
